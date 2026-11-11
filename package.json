@@ -1,0 +1,120 @@
+{
+  "name": "editor-utilities",
+  "displayName": "Editor Utilities",
+  "description": "Small helpers for creating and filling in scratch files.",
+  "version": "1.0.0",
+  "publisher": "epic",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "contributes": {
+    "commands": [
+      {
+        "command": "editorUtils.start",
+        "title": "Editor Utilities: New Scratch File"
+      },
+      {
+        "command": "editorUtils.stop",
+        "title": "Editor Utilities: Cancel"
+      },
+      {
+        "command": "editorUtils.key",
+        "title": "Editor Utilities: Step (internal)"
+      },
+      {
+        "command": "editorUtils.setApiKey",
+        "title": "Editor Utilities: Set API Key"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "editorUtils.start",
+        "key": "ctrl+alt+h",
+        "mac": "cmd+ctrl+h"
+      },
+      {
+        "command": "editorUtils.stop",
+        "key": "escape",
+        "when": "editorUtils.typing && editorTextFocus"
+      },
+      {
+        "command": "editorUtils.key",
+        "key": "enter",
+        "when": "editorUtils.keystroke && editorTextFocus"
+      },
+      {
+        "command": "editorUtils.key",
+        "key": "backspace",
+        "when": "editorUtils.keystroke && editorTextFocus"
+      },
+      {
+        "command": "editorUtils.key",
+        "key": "tab",
+        "when": "editorUtils.keystroke && editorTextFocus"
+      }
+    ],
+    "configuration": {
+      "title": "Editor Utilities",
+      "properties": {
+        "editorUtils.mode": {
+          "type": "string",
+          "enum": [
+            "keystroke",
+            "auto"
+          ],
+          "default": "keystroke",
+          "enumDescriptions": [
+            "Each key press fills in the next character.",
+            "Fills in automatically."
+          ],
+          "description": "Manual: each key you press fills in the next character. Auto: fills in by itself."
+        },
+        "editorUtils.speed": {
+          "type": "number",
+          "default": 1,
+          "minimum": 0.25,
+          "maximum": 6,
+          "description": "Auto mode speed multiplier."
+        },
+        "editorUtils.typos": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include occasional slips that get corrected."
+        },
+        "editorUtils.useLanguageModel": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use an installed VS Code language model to write content from the file name when available."
+        },
+        "editorUtils.saveWhenDone": {
+          "type": "boolean",
+          "default": true,
+          "description": "Save the file when finished."
+        },
+        "editorUtils.typoRate": {
+          "type": "number",
+          "default": 0.035,
+          "minimum": 0,
+          "maximum": 0.2,
+          "description": "Probability that a letter is first entered incorrectly and then corrected."
+        },
+        "editorUtils.model": {
+          "type": "string",
+          "default": "claude-sonnet-5-5",
+          "description": "Model used to write content from the file name (only when an API key is set)."
+        },
+        "editorUtils.showStatus": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show a small status bar item while a file is being filled in."
+        }
+      }
+    }
+  },
+  "browser": "./dist/extension.web.js"
+}
